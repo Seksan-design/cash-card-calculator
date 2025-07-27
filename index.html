@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cash Card Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Cash Card Calculator</h1>
+    <div>
+      <label>ยอดรวมค่าสินค้า:</label>
+      <input id="totalAmount" type="number" placeholder="เช่น 13000">
+    </div>
+    <div>
+      <label>เลือกวิธีใช้บัตร:</label><br>
+      <label><input name="mode" type="radio" value="both" checked> ใช้ Cash Card + Gift Card</label><br>
+      <label><input name="mode" type="radio" value="cashonly"> ใช้เฉพาะ Cash Card อย่างเดียว</label>
+    </div>
+    <button onclick="calculate()">คำนวณ</button>
+    <div id="result"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
