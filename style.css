@@ -1,117 +1,100 @@
-/* ==== RESET & BASE STYLES ==== */
+/* RESET */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
 body {
   font-family: 'Segoe UI', 'Prompt', sans-serif;
-  background-color: #f9fafb;
+  background-color: #f4f7fa;
   color: #333;
-  line-height: 1.6;
   padding: 30px;
 }
 
-/* ==== CONTAINER ==== */
+/* CONTAINER */
 .container {
-  max-width: 480px;
+  max-width: 500px;
   margin: auto;
   padding: 30px;
-  background-color: #ffffff;
+  background: #fff;
   border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
 }
 
-/* ==== HEADING ==== */
+/* HEADING */
 h1 {
-  font-size: 28px;
+  font-size: 26px;
   margin-bottom: 20px;
   color: #111827;
   text-align: center;
 }
 
-/* ==== FORM ELEMENTS ==== */
-input[type="number"],
-select {
-  width: 100%;
-  padding: 14px 16px;
-  font-size: 16px;
-  margin: 12px 0;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  background-color: #fefefe;
-  transition: border-color 0.3s;
-}
-
-input:focus,
-select:focus {
-  border-color: #2563eb;
-  outline: none;
-}
-
-/* ==== RADIO OPTIONS ==== */
-label {
-  display: block;
-  margin: 8px 0 4px;
-  font-weight: 500;
-  color: #374151;
-}
-
-.radio-group {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.radio-group input {
-  margin-right: 6px;
-}
-
-/* ==== BUTTON ==== */
-button {
+/* INPUTS */
+input[type="number"], select {
   width: 100%;
   padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+/* RADIO */
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  margin-right: 10px;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
   background-color: #2563eb;
   color: white;
+  padding: 14px;
   font-size: 16px;
   font-weight: bold;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.25s;
+  transition: background 0.3s ease;
 }
-
 button:hover {
-  background-color: #1e40af;
+  background-color: #1d4ed8;
 }
 
-/* ==== RESULTS BOX ==== */
+/* RESULT */
 .result {
-  margin-top: 24px;
-  padding: 18px;
-  background-color: #f3f4f6;
-  border-left: 6px solid #2563eb;
+  margin-top: 25px;
+  padding: 20px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
   border-radius: 12px;
 }
-
 .result p {
-  margin-bottom: 10px;
-  color: #111827;
-  font-weight: 500;
+  margin-bottom: 12px;
+  font-size: 15px;
+  line-height: 1.6;
+  display: flex;
+  align-items: center;
+}
+.result p span {
+  margin-left: 8px;
+  font-weight: bold;
+}
+.result p::before {
+  content: "✅";
+  margin-right: 8px;
+  font-size: 16px;
 }
 
-/* ==== RESPONSIVE ==== */
-@media (max-width: 500px) {
-  body {
-    padding: 15px;
-  }
-
-  .container {
-    padding: 24px;
-  }
-
-  h1 {
-    font-size: 24px;
-  }
-}
+/* ICONS per line override (optional emoji) */
+.result p:nth-child(2)::before { content: "📦"; }
+.result p:nth-child(3)::before { content: "💰"; }
+.result p:nth-child(4)::before { content: "🎯"; }
