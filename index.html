@@ -1,26 +1,77 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cash Card Calculator</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>เครื่องคำนวณ Cash Card</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f5f5f5; }
+    .box { max-width: 480px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+    h2 { text-align: center; }
+    input[type="number"] { width: 100%; padding: 10px; margin: 10px 0; font-size: 16px; }
+    button { width: 100%; padding: 10px; background: orange; color: white; font-size: 16px; border: none; border-radius: 5px; }
+    .result { margin-top: 20px; font-size: 15px; line-height: 1.6; }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Cash Card Calculator</h1>
-    <div>
-      <label>ยอดรวมค่าสินค้า:</label>
-      <input id="totalAmount" type="number" placeholder="เช่น 13000">
-    </div>
-    <div>
-      <label>เลือกวิธีใช้บัตร:</label><br>
-      <label><input name="mode" type="radio" value="both" checked> ใช้ Cash Card + Gift Card</label><br>
-      <label><input name="mode" type="radio" value="cashonly"> ใช้เฉพาะ Cash Card อย่างเดียว</label>
-    </div>
+  <div class="box">
+    <h2>เครื่องคำนวณ Cash Card</h2>
+    <label>กรอกจำนวนเงินที่ต้องใช้:</label>
+    <input id="amountInput" type="number" placeholder="เช่น 13000" />
     <button onclick="calculate()">คำนวณ</button>
-    <div id="result"></div>
+    <div class="result" id="resultBox"></div>
   </div>
-  <script src="script.js"></script>
+
+  <script>
+    function calculate() {
+      const amount = parseFloat(document.getElementById('amountInput').value);
+      if (isNaN(amount) || amount <= 0) {
+        alert("กรุณากรอกจำนวนเงินที่ถูกต้อง");
+        return;
+      }
+
+      const cardOptions = [
+        { cash: 100000, gift: 44000 },
+        { cash: 50000, gift: 22000 },
+        { cash: 30000, gift: 13200 },
+        { cash: 5000, gift: 2200 },
+      ];
+
+      let usedCards = [];
+      let totalCovered = 0;
+      let totalCashUsed = 0;
+      let remaining = amount;
+
+      for (let option of cardOptions) {
+        let totalValue = option.cash + option.gift;
+        let count = Math.floor(remaining / totalValue);
+        if (count > 0) {
+          usedCards.push({ ...option, count });
+          totalCovered += count * totalValue;
+          totalCashUsed += count * option.cash;
+          remaining = amount - totalCovered;
+        }
+      }
+
+      let extraPay = remaining > 0 ? remaining : 0;
+      let totalPay = totalCashUsed + extraPay;
+      let discount = ((amount - totalPay) / amount * 100).toFixed(2);
+
+      let resultHTML = "";
+      for (let card of usedCards) {
+        resultHTML += `• ใช้ Cash Card ${card.cash.toLocaleString()} บาท × ${card.count} ใบ (Gift ${card.gift.toLocaleString()} บาท/ใบ)<br/>`;
+      }
+
+      resultHTML += `
+        <br/>✅ มูลค่าครอบคลุม: ${totalCovered.toLocaleString()} บาท
+        <br/>💳 เงินที่ใช้ซื้อ Cash Card: ${totalCashUsed.toLocaleString()} บาท
+        <br/>🪙 ส่วนที่ต้องจ่ายเพิ่ม: ${extraPay.toLocaleString()} บาท
+        <br/><br/><b>รวมต้องจ่ายทั้งหมด: ${totalPay.toLocaleString()} บาท</b>
+        <br/>🎁 ส่วนลดที่ได้รับ: <b>${discount}%</b>
+      `;
+
+      document.getElementById("resultBox").innerHTML = resultHTML;
+    }
+  </script>
 </body>
 </html>
